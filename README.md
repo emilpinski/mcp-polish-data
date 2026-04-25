@@ -1,20 +1,37 @@
 # mcp-polish-data
 
-**MCP Server for Polish public data** — KRS, CEIDG, GUS BDL.
+> MCP Server z polskimi danymi publicznymi — KRS, CEIDG, GUS BDL dla Claude, Cursor i Windsurf.
 
-Give your AI assistant (Claude, Cursor, Windsurf) direct access to Polish government registries and statistics without leaving the chat.
+![Screenshot](./screenshot.png)
 
-## What is this?
+## Co to jest
 
-A [Model Context Protocol](https://modelcontextprotocol.io/) server that exposes three Polish public APIs as tools:
+Serwer Model Context Protocol (MCP), który daje asystentom AI bezpośredni dostęp do polskich rejestrów rządowych i statystyk GUS bez opuszczania chatu. Instalujesz raz, a Claude lub Cursor automatycznie wie, jak szukać spółek w KRS, weryfikować przedsiębiorców w CEIDG i pobierać dane regionalne z GUS BDL.
 
-- **KRS** — National Court Register (spółki / companies)
-- **CEIDG** — Central Register of Economic Activity (sole proprietorships)
-- **GUS BDL** — Local Data Bank (regional statistics, demographics, unemployment, salaries)
+Open Source, MIT, bez wymagania klucza API.
 
-Ask your AI: *"Find Orlen in KRS"* or *"What's the unemployment rate in Mazowieckie?"* — and it just works.
+## Funkcje
 
-## Quick start
+- **KRS** — wyszukiwanie spółek po nazwie, pobieranie pełnego odpisu z Krajowego Rejestru Sądowego (9-cyfrowy numer KRS)
+- **CEIDG** — wyszukiwanie jednoosobowych działalności po nazwie, NIP, REGON lub nazwisku właściciela
+- **GUS BDL** — populacja wg województw, stopa bezrobocia, średnie wynagrodzenie brutto, odkrywanie zmiennych statystycznych
+- **Graceful degradation** — gdy CEIDG wymaga tokenu JWT, serwer podaje pomocny komunikat zamiast crashować
+- **Zero konfiguracji** — instalacja jedną komendą pip, brak wymaganych kluczy API dla podstawowych funkcji
+- **Python 3.11+** — async/await, httpx, FastMCP 2.0
+
+## Stack
+
+| Warstwa | Technologia |
+|---------|-------------|
+| Protokół | Model Context Protocol (MCP) |
+| Framework | FastMCP 2.0 |
+| HTTP | httpx (async) |
+| Python | 3.11+ |
+| Build | Hatchling |
+| Testy | pytest, pytest-asyncio |
+| Licencja | MIT |
+
+## Uruchomienie
 
 ```bash
 pip install mcp-polish-data
@@ -22,7 +39,7 @@ pip install mcp-polish-data
 
 ### Claude Desktop
 
-Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Edytuj `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) lub `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
 ```json
 {
@@ -34,59 +51,45 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) o
 }
 ```
 
-Restart Claude Desktop. The tools appear automatically.
+Zrestartuj Claude Desktop — narzędzia pojawią się automatycznie.
 
 ### Cursor / Windsurf
 
-Add to your MCP config the same way — both IDEs follow the same spec.
-
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `krs_search_company(name)` | Search companies by name in the National Court Register |
-| `krs_get_company_details(krs_number)` | Full registry excerpt for a 9-digit KRS number |
-| `ceidg_search_business(name, nip, regon, surname)` | Search sole proprietorships |
-| `gus_get_population(unit_name, year)` | Population by voivodeship (16 regions) |
-| `gus_get_unemployment_rate(year)` | Unemployment rate by voivodeship |
-| `gus_get_average_salary(year)` | Average gross monthly salary by voivodeship |
-| `gus_search_variable(query)` | Discover any statistical variable in GUS BDL |
-
-## Example prompts
-
-- *"Show me the registered address and board of PKN Orlen"*
-- *"List top 10 companies in KRS with 'technologie' in their name"*
-- *"Compare 2023 unemployment rates across all Polish voivodeships"*
-- *"What's the average salary in Pomorskie vs Mazowieckie?"*
-- *"Find any GUS variable related to renewable energy"*
-
-## Development
-
 ```bash
-git clone https://github.com/emilpinski/mcp-polish-data.git
+git clone https://github.com/emilpinski/mcp-polish-data
 cd mcp-polish-data
 pip install -e ".[dev]"
-pytest tests/ -v -m "not integration"  # unit tests (offline)
-pytest tests/ -v                        # include live API tests
+pytest tests/ -v -m "not integration"
 ```
 
-## Notes on API access
+## Dostępne narzędzia
 
-- **KRS** and **GUS BDL** — fully public, no API key needed.
-- **CEIDG 2.0** — basic search works anonymously; some advanced endpoints require a free JWT token from [datastore.ceidg.gov.pl](https://datastore.ceidg.gov.pl/). The server degrades gracefully with a helpful message when a token is needed.
+| Narzędzie | Opis |
+|-----------|------|
+| `krs_search_company(name)` | Wyszukaj spółki po nazwie w KRS |
+| `krs_get_company_details(krs_number)` | Pełny odpis dla numeru KRS (9 cyfr) |
+| `ceidg_search_business(name, nip, regon, surname)` | Szukaj działalności w CEIDG |
+| `gus_get_population(unit_name, year)` | Populacja wg województwa |
+| `gus_get_unemployment_rate(year)` | Stopa bezrobocia wg województw |
+| `gus_get_average_salary(year)` | Średnie wynagrodzenie brutto wg województw |
+| `gus_search_variable(query)` | Odkrywaj zmienne statystyczne w GUS BDL |
 
-## License
+## Zmienne środowiskowe
 
-MIT — use it, fork it, ship it.
+| Zmienna | Opis | Wymagana |
+|---------|------|----------|
+| `CEIDG_TOKEN` | JWT token dla zaawansowanych endpointów CEIDG | ❌ (opcjonalna) |
 
-## Contributing
+## Przykładowe prompty
 
-PRs welcome. Ideas for next tools:
-- REGON (Central Statistical Register)
-- Rejestr Dłużników Niewypłacalnych
-- Rejestr BDO (waste management)
-- Monitor Sądowy i Gospodarczy
+- *"Znajdź adres i zarząd PKN Orlen"*
+- *"Porównaj stopę bezrobocia w 2023 we wszystkich województwach"*
+- *"Jakie jest średnie wynagrodzenie w Pomorskim vs Mazowieckim?"*
+- *"Znajdź wszystkie spółki z 'technologie' w nazwie"*
+
+## Status
+
+Open Source — [PyPI: mcp-polish-data](https://pypi.org/project/mcp-polish-data/)
 
 ---
-
-Built with [FastMCP](https://github.com/jlowin/fastmcp). Not affiliated with Polish government agencies — this is a community wrapper around their public APIs.
+Built by [Emil Piński](https://emilpinski.pl)
