@@ -4,7 +4,7 @@
 
 > MCP Server with Polish public data — KRS, CEIDG, GUS BDL for Claude, Cursor, and Windsurf.
 
-![Screenshot](./screenshot.png)
+![Screenshot](screenshot.png)
 
 ## What is it
 
@@ -98,5 +98,5 @@ Built by [Emil Piński](https://emilpinski.pl)
 
 ## Screenshots
 
-![Screenshot 1](docs/screenshots/Zrzut_ekranu_25-4-2026_131424_mcp-polish-data.vercel.app.jpeg)
-![Screenshot 2](docs/screenshots/Zrzut_ekranu_25-4-2026_13155_mcp-polish-data.vercel.app.jpeg)
+![Screenshot](screenshot.png)
+![Screenshot](screenshot.png)
