@@ -1,5 +1,7 @@
 # mcp-polish-data
 
+[![CI](https://github.com/emilpinski/mcp-polish-data/actions/workflows/ci.yml/badge.svg)](https://github.com/emilpinski/mcp-polish-data/actions/workflows/ci.yml)
+
 ![Status](https://img.shields.io/badge/Status-Live-green)
 
 > MCP Server with Polish public data — KRS, CEIDG, GUS BDL for Claude, Cursor, and Windsurf.
