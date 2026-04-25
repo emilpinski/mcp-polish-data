@@ -1,37 +1,37 @@
 # mcp-polish-data
 
-> MCP Server z polskimi danymi publicznymi — KRS, CEIDG, GUS BDL dla Claude, Cursor i Windsurf.
+> MCP Server with Polish public data — KRS, CEIDG, GUS BDL for Claude, Cursor, and Windsurf.
 
 ![Screenshot](./screenshot.png)
 
-## Co to jest
+## What is it
 
-Serwer Model Context Protocol (MCP), który daje asystentom AI bezpośredni dostęp do polskich rejestrów rządowych i statystyk GUS bez opuszczania chatu. Instalujesz raz, a Claude lub Cursor automatycznie wie, jak szukać spółek w KRS, weryfikować przedsiębiorców w CEIDG i pobierać dane regionalne z GUS BDL.
+A Model Context Protocol (MCP) server that gives AI assistants direct access to Polish government registries and GUS statistics without leaving the chat. Install once, and Claude or Cursor automatically knows how to search for companies in KRS, verify sole traders in CEIDG, and retrieve regional data from GUS BDL.
 
-Open Source, MIT, bez wymagania klucza API.
+Open Source, MIT, no API key required.
 
-## Funkcje
+## Features
 
-- **KRS** — wyszukiwanie spółek po nazwie, pobieranie pełnego odpisu z Krajowego Rejestru Sądowego (9-cyfrowy numer KRS)
-- **CEIDG** — wyszukiwanie jednoosobowych działalności po nazwie, NIP, REGON lub nazwisku właściciela
-- **GUS BDL** — populacja wg województw, stopa bezrobocia, średnie wynagrodzenie brutto, odkrywanie zmiennych statystycznych
-- **Graceful degradation** — gdy CEIDG wymaga tokenu JWT, serwer podaje pomocny komunikat zamiast crashować
-- **Zero konfiguracji** — instalacja jedną komendą pip, brak wymaganych kluczy API dla podstawowych funkcji
+- **KRS** — search companies by name, retrieve full company extract from the National Court Register (9-digit KRS number)
+- **CEIDG** — search sole trader businesses by name, NIP, REGON, or owner surname
+- **GUS BDL** — population by voivodeship, unemployment rate, average gross salary, statistical variable discovery
+- **Graceful degradation** — when CEIDG requires a JWT token, the server provides a helpful message instead of crashing
+- **Zero configuration** — single pip command install, no API keys required for basic functions
 - **Python 3.11+** — async/await, httpx, FastMCP 2.0
 
 ## Stack
 
-| Warstwa | Technologia |
-|---------|-------------|
-| Protokół | Model Context Protocol (MCP) |
+| Layer | Technology |
+|-------|-----------|
+| Protocol | Model Context Protocol (MCP) |
 | Framework | FastMCP 2.0 |
 | HTTP | httpx (async) |
 | Python | 3.11+ |
 | Build | Hatchling |
-| Testy | pytest, pytest-asyncio |
-| Licencja | MIT |
+| Tests | pytest, pytest-asyncio |
+| License | MIT |
 
-## Uruchomienie
+## Getting Started
 
 ```bash
 pip install mcp-polish-data
@@ -39,7 +39,7 @@ pip install mcp-polish-data
 
 ### Claude Desktop
 
-Edytuj `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) lub `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Edit `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
 
 ```json
 {
@@ -51,7 +51,7 @@ Edytuj `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 }
 ```
 
-Zrestartuj Claude Desktop — narzędzia pojawią się automatycznie.
+Restart Claude Desktop — tools will appear automatically.
 
 ### Cursor / Windsurf
 
@@ -62,30 +62,30 @@ pip install -e ".[dev]"
 pytest tests/ -v -m "not integration"
 ```
 
-## Dostępne narzędzia
+## Available Tools
 
-| Narzędzie | Opis |
-|-----------|------|
-| `krs_search_company(name)` | Wyszukaj spółki po nazwie w KRS |
-| `krs_get_company_details(krs_number)` | Pełny odpis dla numeru KRS (9 cyfr) |
-| `ceidg_search_business(name, nip, regon, surname)` | Szukaj działalności w CEIDG |
-| `gus_get_population(unit_name, year)` | Populacja wg województwa |
-| `gus_get_unemployment_rate(year)` | Stopa bezrobocia wg województw |
-| `gus_get_average_salary(year)` | Średnie wynagrodzenie brutto wg województw |
-| `gus_search_variable(query)` | Odkrywaj zmienne statystyczne w GUS BDL |
+| Tool | Description |
+|------|-------------|
+| `krs_search_company(name)` | Search companies by name in KRS |
+| `krs_get_company_details(krs_number)` | Full extract for a KRS number (9 digits) |
+| `ceidg_search_business(name, nip, regon, surname)` | Search sole traders in CEIDG |
+| `gus_get_population(unit_name, year)` | Population by voivodeship |
+| `gus_get_unemployment_rate(year)` | Unemployment rate by voivodeship |
+| `gus_get_average_salary(year)` | Average gross salary by voivodeship |
+| `gus_search_variable(query)` | Discover statistical variables in GUS BDL |
 
-## Zmienne środowiskowe
+## Environment Variables
 
-| Zmienna | Opis | Wymagana |
-|---------|------|----------|
-| `CEIDG_TOKEN` | JWT token dla zaawansowanych endpointów CEIDG | ❌ (opcjonalna) |
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `CEIDG_TOKEN` | JWT token for advanced CEIDG endpoints | ❌ (optional) |
 
-## Przykładowe prompty
+## Example Prompts
 
-- *"Znajdź adres i zarząd PKN Orlen"*
-- *"Porównaj stopę bezrobocia w 2023 we wszystkich województwach"*
-- *"Jakie jest średnie wynagrodzenie w Pomorskim vs Mazowieckim?"*
-- *"Znajdź wszystkie spółki z 'technologie' w nazwie"*
+- *"Find the address and management of PKN Orlen"*
+- *"Compare the unemployment rate in 2023 across all voivodeships"*
+- *"What is the average salary in Pomerania vs Masovia?"*
+- *"Find all companies with 'technologies' in their name"*
 
 ## Status
 
