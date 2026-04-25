@@ -4,21 +4,21 @@
 
 > MCP Server with Polish public data — KRS, CEIDG, GUS BDL for Claude, Cursor, and Windsurf.
 
-![Screenshot](screenshot.png)
+![Landing page](screenshot.png)
 
 ## What is it
 
-A Model Context Protocol (MCP) server that gives AI assistants direct access to Polish government registries and GUS statistics without leaving the chat. Install once, and Claude or Cursor automatically knows how to search for companies in KRS, verify sole traders in CEIDG, and retrieve regional data from GUS BDL.
+A Model Context Protocol (MCP) server that gives AI assistants direct access to Polish government registries and GUS statistics without leaving the chat. Install once, and Claude or Cursor automatically knows how to look up companies in KRS, verify sole traders in CEIDG, and retrieve regional statistics from GUS BDL.
 
-Open Source, MIT, no API key required.
+MIT licensed, no API key required.
 
 ## Features
 
-- **KRS** — search companies by name, retrieve full company extract from the National Court Register (9-digit KRS number)
+- **KRS** — look up a company by NIP (via VAT Whitelist — KRS API doesn't support name search), retrieve full extract by 9 or 10-digit KRS number
 - **CEIDG** — search sole trader businesses by name, NIP, REGON, or owner surname
 - **GUS BDL** — population by voivodeship, unemployment rate, average gross salary, statistical variable discovery
 - **Graceful degradation** — when CEIDG requires a JWT token, the server provides a helpful message instead of crashing
-- **Zero configuration** — single pip command install, no API keys required for basic functions
+- **Zero configuration** — single pip install, no API keys required for basic functions
 - **Python 3.11+** — async/await, httpx, FastMCP 2.0
 
 ## Stack
@@ -68,8 +68,8 @@ pytest tests/ -v -m "not integration"
 
 | Tool | Description |
 |------|-------------|
-| `krs_search_company(name)` | Search companies by name in KRS |
-| `krs_get_company_details(krs_number)` | Full extract for a KRS number (9 digits) |
+| `krs_search_company(nip)` | Search company by NIP (via VAT Whitelist — KRS API doesn't support name search) |
+| `krs_get_company_details(krs_number)` | Full extract for a 9 or 10-digit KRS number |
 | `ceidg_search_business(name, nip, regon, surname)` | Search sole traders in CEIDG |
 | `gus_get_population(unit_name, year)` | Population by voivodeship |
 | `gus_get_unemployment_rate(year)` | Unemployment rate by voivodeship |
@@ -84,10 +84,10 @@ pytest tests/ -v -m "not integration"
 
 ## Example Prompts
 
-- *"Find the address and management of PKN Orlen"*
+- *"Look up NIP 5270103391 and tell me the company name and address"*
 - *"Compare the unemployment rate in 2023 across all voivodeships"*
 - *"What is the average salary in Pomerania vs Masovia?"*
-- *"Find all companies with 'technologies' in their name"*
+- *"Find all CEIDG sole traders with surname Kowalski in Kraków"*
 
 ## Status
 
@@ -98,5 +98,5 @@ Built by [Emil Piński](https://emilpinski.pl)
 
 ## Screenshots
 
-![Screenshot](screenshot.png)
-![Screenshot](screenshot.png)
+![Landing page and documentation](docs/screenshots/Zrzut_ekranu_25-4-2026_131424_mcp-polish-data.vercel.app.jpeg)
+![API endpoints overview](docs/screenshots/Zrzut_ekranu_25-4-2026_13155_mcp-polish-data.vercel.app.jpeg)
