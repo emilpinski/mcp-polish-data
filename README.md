@@ -95,3 +95,8 @@ Live — [mcp-polish-data.vercel.app](https://mcp-polish-data.vercel.app) | [PyP
 
 ---
 Built by [Emil Piński](https://emilpinski.pl)
+
+## Screenshots
+
+![Screenshot 1](docs/screenshots/Zrzut_ekranu_25-4-2026_131424_mcp-polish-data.vercel.app.jpeg)
+![Screenshot 2](docs/screenshots/Zrzut_ekranu_25-4-2026_13155_mcp-polish-data.vercel.app.jpeg)
