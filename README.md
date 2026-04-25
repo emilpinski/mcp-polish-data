@@ -1,8 +1,10 @@
 # mcp-polish-data
 
+![Status](https://img.shields.io/badge/Status-Live-green)
+
 > MCP Server with Polish public data — KRS, CEIDG, GUS BDL for Claude, Cursor, and Windsurf.
 
-![Screenshot](https://raw.githubusercontent.com/emilpinski/mcp-polish-data/main/docs/screenshots/Zrzut_ekranu_25-4-2026_131424_mcp-polish-data.vercel.app.jpeg)
+![Screenshot](./screenshot.png)
 
 ## What is it
 
@@ -78,7 +80,7 @@ pytest tests/ -v -m "not integration"
 
 | Variable | Description | Required |
 |----------|-------------|----------|
-| `CEIDG_TOKEN` | JWT token for advanced CEIDG endpoints | ❌ (optional) |
+| `CEIDG_TOKEN` | JWT token for advanced CEIDG endpoints | optional |
 
 ## Example Prompts
 
@@ -89,7 +91,7 @@ pytest tests/ -v -m "not integration"
 
 ## Status
 
-Open Source — [PyPI: mcp-polish-data](https://pypi.org/project/mcp-polish-data/)
+Live — [mcp-polish-data.vercel.app](https://mcp-polish-data.vercel.app) | [PyPI: mcp-polish-data](https://pypi.org/project/mcp-polish-data/)
 
 ---
 Built by [Emil Piński](https://emilpinski.pl)
