@@ -2,7 +2,7 @@
 
 > MCP Server with Polish public data — KRS, CEIDG, GUS BDL for Claude, Cursor, and Windsurf.
 
-![Screenshot](./screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/emilpinski/mcp-polish-data/main/docs/screenshots/Zrzut_ekranu_25-4-2026_131424_mcp-polish-data.vercel.app.jpeg)
 
 ## What is it
 
